@@ -17,7 +17,7 @@ class OrderSummary extends Component {
       <Aux>
         <h3>Your Order</h3>
         <p>A delicious burger with the following ingredients</p>
-        <ul>{this.ingredientSummary}</ul>
+        <ul>{ingredientSummary}</ul>
         <p>
           <strong>Total Price: {this.props.totalPrice}</strong>
         </p>
