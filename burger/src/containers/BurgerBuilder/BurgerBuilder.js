@@ -5,7 +5,6 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import axios from "../../axios-orders";
 import withErrorHanler from "../../hoc/withErrorHandler/withErrorHandler";
 
@@ -74,28 +73,15 @@ class BurgerBuilder extends Component {
 
   purchaseContinueHandler = () => {
     this.setState({ loading: true });
-    const data = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Tung",
-        address: {
-          street: "Test address",
-          zipCode: "170000",
-          country: "Vietnam",
-        },
-        email: "tungaqhd@gmail.com",
-      },
-      deliveryMethod: "Fast",
-    };
-    axios
-      .post("/orders.json", data)
-      .then((response) => {
-        this.setState({ loading: false, purchasing: false });
-      })
-      .catch((error) => {
-        this.setState({ loading: false, purchasing: false });
-      });
+    const queryParams = [];
+    for(let i in this.state.ingredients) {
+      queryParams.push(encodeURIComponent(i)+"="+encodeURIComponent(this.state.ingredients[i]));
+    }
+    queryParams.push("price="+this.state.totalPrice);
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?"+queryParams.join("&")
+    });
   };
   render() {
     const disableInfo = {
