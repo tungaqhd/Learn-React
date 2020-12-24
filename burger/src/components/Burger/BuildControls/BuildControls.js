@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as actionTypes from "../../../store/actions";
+import * as actionTypes from "../../../store/actions/actionTypes";
 import classes from "./BuildControls.css";
 import BuildControl from "./BuildControl/BuildControl";
 
@@ -31,7 +31,7 @@ const buildControls = (props) => {
         disabled={!props.purchasable}
         onClick={props.ordered}
       >
-        ORDER NOW
+        {props.isAuthenticated ? "Order Now" : "Please Sigin"}
       </button>
     </div>
   );
